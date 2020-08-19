@@ -4,6 +4,7 @@ import { isScrap, scrap, unscrap } from '@utils/scrapService'
 import { Feed } from '../../types/feed'
 import Profile from './profile'
 import { Scrap } from '@components/toggle'
+import { cardMedia } from '@theme/media'
 import { lightGray } from '@theme/color'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
@@ -53,9 +54,6 @@ function Card(props: Props) {
 
 export default withResizeDetector(Card)
 
-// ~ 1272 고정크기 4개
-// 1272 ~ 930 -> 사이즈 줄여가며 4개
-// 930 ~ 642 -> 사이즈 줄여가며 3개
 const Container = styled.div`
   margin-bottom: 30px;
   margin-right: 10px;
@@ -63,18 +61,8 @@ const Container = styled.div`
   display: flex;
   width: 268px;
   flex-direction: column;
-  @media (max-width: 1272px){
-    width: 22%; 
-  }
-
-  @media (max-width: 980px){
-    width: 30%; 
-  }
-
-  @media (max-width: 700px){
-    width: 45%; 
-  }
   position: relative;
+  ${cardMedia}
 `
 
 const ImageBox = styled.div<{ isLoaded: boolean, height: number }>`

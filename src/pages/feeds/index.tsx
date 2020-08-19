@@ -59,7 +59,7 @@ const Container = styled.div`
 `
 
 const ContentsBox = styled.div`
-  width: 1256px;
+  width: 1152px;
   height: 100%;
   padding: 0px 50px 0px 50px;
 `

@@ -2,15 +2,15 @@
 
 In the project directory, you can run:
 
-### `yarn install`
+### `yarn` or `npm install`
 
 Dependency Injection for the app
 
-### `yarn start`
+### `yarn start` or `npm start`
 
 Runs the homework app in the development mode.
 
-### `yarn build`
+### `yarn build` or `npm run build`
 
 Build the homework app in the production mode.
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { bold } from '@theme/font'
 import styled from 'styled-components'
 
 type Props = {
@@ -28,13 +29,6 @@ const ProfileImage = styled.img`
 `
 
 const ProfileNickname = styled.span`
-  font-family: AppleSDGothicNeo;
-  font-size: 15px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.27;
-  letter-spacing: normal;
-  color: rgba(0, 0, 0, 0.74);
+  ${bold}
   margin-left: 10px;
 `

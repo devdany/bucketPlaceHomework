@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import checkedImg from '../assets/images/check.png'
 import { mainLightBlue } from '@theme/color'
+import { normal } from '@theme/font'
 import scrapImg from '../assets/images/scrap.png'
 import styled from 'styled-components'
 import unscrapImg from '../assets/images/unscrap.png'
@@ -92,14 +93,7 @@ const ScrapImage = styled.img`
 `
 
 const Label = styled.span`
-  font-size: 15px;
-  font-family: AppleSDGothicNeo;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #424242;
+  ${normal}
   margin-left: 6px;
   user-select: none;
 `

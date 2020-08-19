@@ -1,4 +1,5 @@
 import React from 'react'
+import { lightGray } from '@theme/color'
 import styled from 'styled-components'
 
 type Props = {
@@ -23,11 +24,15 @@ const Container = styled.div`
   width: 268px;
   flex-direction: column;
   @media (max-width: 1272px){
-    flex: 23%; 
+    width: 22%; 
   }
 
-  @media (max-width: 930px){
-    flex: 32%; 
+  @media (max-width: 980px){
+    width: 30%; 
+  }
+
+  @media (max-width: 700px){
+    width: 45%; 
   }
   position: relative;
 `
@@ -36,11 +41,10 @@ const DummyImage = styled.div<{ height: number }>`
   margin-top: 10px;
   border-radius: 10px;
   overflow: hidden;
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #dddddd;
+  background-color: ${lightGray};
   height: ${(props) => props.height}px;
 `
 
@@ -56,13 +60,13 @@ const DummyProfileImage = styled.div`
   width: 36px;
   height: 36px;
   border-radius: 18px;
-  background-color: #dddddd;
+  background-color: ${lightGray};
 `
 
 const DummyProfileNicknameBox = styled.div`
   width: 150px;
   height: 30px;
   border-radius: 6px;
-  background-color: #dddddd;
+  background-color: ${lightGray};
   margin-left: 10px;
 `

@@ -1,40 +1,48 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { isScrap, scrap, unscrap } from '@utils/scrapService'
 
 import { Feed } from '../../types/feed'
 import Profile from './profile'
 import { Scrap } from '@components/toggle'
+import { lightGray } from '@theme/color'
 import styled from 'styled-components'
 import { withResizeDetector } from 'react-resize-detector'
 
 type Props = {
   feed: Feed
   onChangeImageHeight: (height: number) => void
+  imageHeight: number
   height?: number
 }
+const PROFILE_HEIGHT = 36
+const MARGIN_PROFILE_AND_IMAGE = 10
 function Card(props: Props) {
+  const [isLoadedImage, setLoadedImage] = useState(false)
   const handleScrap = () => {
-    scrap(props.feed.id)
+    scrap(props.feed)
   }
 
   const handleUnscrap = () => {
     unscrap(props.feed.id)
   }
 
+  const handleLoadImage = () => {
+    setLoadedImage(true)
+  }
+
   useEffect(() => {
-    const PROFILE_HEIGHT = 36
-    const MARGIN_PROFILE_AND_IMAGE = 10
-    if (props.height) {
-      const imageHeight = props.height - PROFILE_HEIGHT - MARGIN_PROFILE_AND_IMAGE
-      props.onChangeImageHeight(imageHeight)
+    if (!props.height) {
+      return
     }
-  }, [props.height])
+    const imageHeight = props.height - PROFILE_HEIGHT - MARGIN_PROFILE_AND_IMAGE
+    props.onChangeImageHeight(imageHeight)
+  }, [props, props.height])
 
   return (
     <Container>
       <Profile profile_img={props.feed.profile_image_url} nickname={props.feed.nickname}/>
-      <ImageBox>
-        <FeedImage src={props.feed.image_url}/>
+      <ImageBox isLoaded={isLoadedImage} height={props.imageHeight}>
+        <FeedImage onLoad={handleLoadImage} src={props.feed.image_url}/>
       </ImageBox>
       <ScrapButtonBox>
         <Scrap onCheck={handleScrap} onRelease={handleUnscrap} default={isScrap(props.feed.id)}/>
@@ -50,25 +58,30 @@ export default withResizeDetector(Card)
 // 930 ~ 642 -> 사이즈 줄여가며 3개
 const Container = styled.div`
   margin-bottom: 30px;
-  margin-right: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
   display: flex;
   width: 268px;
   flex-direction: column;
   @media (max-width: 1272px){
-    flex: 23%; 
+    width: 22%; 
   }
 
-  @media (max-width: 930px){
-    flex: 32%; 
+  @media (max-width: 980px){
+    width: 30%; 
+  }
+
+  @media (max-width: 700px){
+    width: 45%; 
   }
   position: relative;
 `
 
-const ImageBox = styled.div`
+const ImageBox = styled.div<{ isLoaded: boolean, height: number }>`
   margin-top: 10px;
   border-radius: 10px;
   overflow: hidden;
-  cursor: pointer;
+  ${(props) => props.isLoaded ? 'cursor: pointer;' : `background-color: ${lightGray}; height: ${props.height}px;`}
   display: flex;
   justify-content: center;
   align-items: center;

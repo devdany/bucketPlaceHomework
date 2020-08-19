@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react'
 
-export const useIntersection = (onIntersectAction: () => void, updateTriggers: any[], isStop: boolean) => {
-  const onIntersect = async (entries: any, observer: any) => {
+export const useIntersection = (onIntersectAction: () => void, updateTriggers: any[]) => {
+  const onIntersect = async (entries: any, observer: any) => { 
     const entry = entries[0]
     if (entry.isIntersecting) {
       observer.unobserve(entry.target)
@@ -14,14 +15,12 @@ export const useIntersection = (onIntersectAction: () => void, updateTriggers: a
 
   useEffect(() => {
     const observer = new IntersectionObserver(onIntersect, { threshold: 1 });
-    if (!isStop) {
-      if (ref) {
-        const scrollBoxElement: any = ref.current
-        observer.observe(scrollBoxElement)
-      }
+    if (ref) {
+      const scrollBoxElement: any = ref.current
+      observer.observe(scrollBoxElement)
     }
     return () => observer.disconnect()
-  }, updateTriggers)
+  }, [...updateTriggers])
 
   return [ref]
 }

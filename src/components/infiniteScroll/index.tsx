@@ -13,12 +13,12 @@ type Props = {
 }
 
 let isLastPage = false
+const DATA_COUNT_PER_PAGE = 20
 export default function InfiniteScroll(props: Props) {
   const [currentImageBoxHeight, setCurrentImageBoxHeight] = useState(0)
   const [dummys, setDummys] = useState<JSX.Element[]>([])
-  
   const loadData = () => {
-    if (props.feeds.length < 20) {
+    if (props.feeds.length < DATA_COUNT_PER_PAGE) {
       return
     }
     if (!isLastPage) {
@@ -26,16 +26,18 @@ export default function InfiniteScroll(props: Props) {
     }
     loadAdditionalData()
       .then((feeds) => {
-          props.appendFeeds(feeds)
-          isLastPage = feeds.length < 20
-          setDummys([])
+          if (!isLastPage) {
+            props.appendFeeds(feeds)
+            setDummys([])
+          }
+          isLastPage = feeds.length < DATA_COUNT_PER_PAGE
       })
       .catch((err) => {
         // dummy 없애기 & load fail notify OR dummy를 로드 실패한 상태 아이템으로 변경
         setDummys([])
       })
   }
-  const [scrollBox] = useIntersection(loadData, [props, props.feeds, currentImageBoxHeight], isLastPage)
+  const [scrollBox] = useIntersection(loadData, [props, props.feeds, currentImageBoxHeight, dummys])
 
   const onChangeImageHeight = (height: number) => {
     const MIN_HEIGHT = 180
@@ -45,13 +47,13 @@ export default function InfiniteScroll(props: Props) {
   }
 
   const generateDummys = () => {
-    const DATA_COUNT_PER_PAGE = 20
     const generatedDummys = []
     for (let i = dummys.length + 1; i <= dummys.length + DATA_COUNT_PER_PAGE; i++ ) {
       generatedDummys.push(<DummyCard key={i} imageHeight={currentImageBoxHeight}/>)
     }
     return generatedDummys
   }
+  
   return (
     <ScrollContainer>
       {props.feeds.map((feed) => {

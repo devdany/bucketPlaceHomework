@@ -19,8 +19,6 @@ export const loadAdditionalData = async (currentPage: number) => {
     if (feeds.length === 0) {
       return []
     }
-
-    currentPage ++
     return feeds
   } catch (err) {
     return Promise.reject(err)

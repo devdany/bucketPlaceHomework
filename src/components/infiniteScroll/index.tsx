@@ -16,6 +16,7 @@ let isLastPage = false
 const DATA_COUNT_PER_PAGE = 20
 export default function InfiniteScroll(props: Props) {
   const [currentImageBoxHeight, setCurrentImageBoxHeight] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
   const [dummys, setDummys] = useState<JSX.Element[]>([])
   const loadData = () => {
     if (props.feeds.length < DATA_COUNT_PER_PAGE) {
@@ -24,10 +25,11 @@ export default function InfiniteScroll(props: Props) {
     if (!isLastPage) {
       setDummys([...dummys, ...generateDummys()])
     }
-    loadAdditionalData()
+    loadAdditionalData(currentPage)
       .then((feeds) => {
           if (!isLastPage) {
             props.appendFeeds(feeds)
+            setCurrentPage(currentPage + 1)
             setDummys([])
           }
           isLastPage = feeds.length < DATA_COUNT_PER_PAGE
